@@ -8,7 +8,7 @@ $app = AppFactory::create();
 // Set CORS headers
 header('Access-Control-Allow-Origin: *');  // Allow all origins or specify your frontend URL
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, Content-Type, Accept');
+header('Access-Control-Allow-Headers: Origin, Content-Type, Accept, Authorization');
 
 // Handle preflight requests for OPTIONS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

@@ -22,11 +22,9 @@ function handleMove() {
     .post('http://127.0.0.1:81/api/chess', { pgn })
     .then((response) => {
       console.log('PGN successfully sent to the API:', response.data)
-      // Handle the API response as needed
     })
     .catch((error) => {
       console.error('Error sending PGN to the API:', error)
-      // Handle the error as needed
     })
 }
 </script>

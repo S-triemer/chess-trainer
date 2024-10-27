@@ -38,4 +38,9 @@ class Configuration
         self::init();
         return self::$config['database']['db_port'];
     }
+    public static function getSecretKey() : string 
+    {
+        self::init();
+        return self::$config['jwt']['secret_key'];   
+    }
 }
