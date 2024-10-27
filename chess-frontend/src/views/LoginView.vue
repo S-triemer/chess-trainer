@@ -1,7 +1,9 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const username = ref('')
 const password = ref('')
 
@@ -12,10 +14,13 @@ async function login() {
       password: password.value
     })
     console.log(response)
-    //const token = response.data.token
-    //localStorage.setItem('jwt', token) // Store JWT
-    //this.$router.push('/user') // Redirect to user page
-    console.log('logged in')
+    const token = response.data.token
+    console.log(token)
+    localStorage.setItem('jwt', token)
+
+    router.push({
+      name: 'userPage'
+    })
   } catch (error) {
     console.error('Login failed:', error)
   }

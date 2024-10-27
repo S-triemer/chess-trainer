@@ -12,6 +12,6 @@ class Router
     {
         $app->post('/api/users/register', [$this->chessController, 'registerUser']);
         $app->post('/api/users/login', [$this->chessController, 'loginUser']);
-        $app->post('/api/chess', [$this->chessController, 'test']);
+        $app->get('/api/user', [$this->chessController, 'getUser']);
     }
 }

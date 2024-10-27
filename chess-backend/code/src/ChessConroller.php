@@ -15,7 +15,8 @@ class ChessController
 
     public function __construct(
         private RegisterService $registerService,
-        private LoginService $loginService
+        private LoginService $loginService,
+        private UserService $userService
     ){}
 
     public function registerUser(Request $request, Response $response):Response
@@ -50,7 +51,9 @@ class ChessController
         if($result['success']){
             $response->getBody()->write(json_encode([
                 'status' => 'success',
-                'message' => $result['message']
+                'message' => $result['message'],
+                'token' => $result['token'],
+                'username' =>$result['username']
             ]));
             return $response->withStatus(self::HTTP_OK)->withHeader('Content-Type', 'application/json');
         } else {
@@ -62,7 +65,23 @@ class ChessController
         }
     }
 
-    public function test() {
-        var_dump("test");
+    public function getUser(Request $request, Response $response)
+    {
+        $authHeader = $request->getHeaderLine('Authorization');
+        $result = $this->userService->getUserForId($authHeader);
+        if($result['success']){
+            $response->getBody()->write(json_encode([
+                'status' => 'success',
+                'user' => $result['user']
+            ]));
+            return $response->withStatus(self::HTTP_OK)->withHeader('Content-Type', 'application/json');
+        } else {
+            $response->getBody()->write(json_encode([
+                'status' => 'error',
+                'message' => $result['message']
+            ]));
+            return $response->withStatus(self::HTTP_UNAUTHORIZED)->withHeader('Content-Type', 'application/json');
+        }
+
     }
 }

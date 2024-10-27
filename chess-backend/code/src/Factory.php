@@ -25,8 +25,18 @@ class Factory
                         ),
                     new LoginService(
                         new DbReader(
+                            $this->dbConnection,
+                        ),
+                        new JwtService()
+                    ),
+                    new UserService(
+                        new DbReader(
                             $this->dbConnection
-                        )
+                        ),
+                        new Authenticator(
+                            new JwtService()
+                        ),
+                        new JwtService()
                     )
                 )
             )
