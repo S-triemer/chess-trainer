@@ -1,0 +1,50 @@
+services:
+  nginx-service:
+    image: chess-backend-nginx:dev
+    container_name: chess-backend-nginx
+    networks:
+      - chess-backend_network
+    ports:
+      - "81:80"
+    environment:
+      PHP_FPM_SERVICE_NAME: php-service
+      NGINX_ROOT: /var/www/html/public
+    volumes:
+      - ./chess-backend/code/public:/var/www/html/public
+
+  php-service:
+    image: chess-backend-php-fpm:dev
+    container_name: chess-backend-php-fpm
+    networks:
+      - chess-backend_network
+    volumes:
+      - ./chess-backend/code:/var/www/html
+      - ./chess-backend/code/public:/var/www/html/public
+
+  mysql-service:
+    image: chess-backend-mysql:dev
+    container_name: chess-backend-mysql
+    networks:
+      - chess-backend_network
+    ports:
+      - "3307:3306"
+    volumes:
+      - .database:/var/lib/mysql:rw
+      - ./chess-backend/docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+
+  vue-frontend:
+    image: chess-vue-frontend:dev
+    working_dir: /app
+    volumes:
+      - ./chess-frontend:/app
+    ports:
+      - "5173:5173"
+    command: npm run dev
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+networks:
+  chess-backend_network:
+    driver: bridge

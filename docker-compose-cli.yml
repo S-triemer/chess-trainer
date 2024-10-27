@@ -1,0 +1,7 @@
+services:
+  php_cli-service:
+    image: chess-backend-php_cli:dev
+    container_name: chess-backend-php_cli:dev
+    working_dir: /var/www/html
+    volumes:
+      - ./chess-backend/code:/var/www/html
