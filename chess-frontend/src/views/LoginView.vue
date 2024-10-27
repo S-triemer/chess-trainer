@@ -18,7 +18,6 @@ async function login() {
     console.log('logged in')
   } catch (error) {
     console.error('Login failed:', error)
-    // Handle error (e.g., show message)
   }
 }
 </script>
