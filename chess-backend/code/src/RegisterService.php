@@ -7,6 +7,7 @@ class RegisterService{
     public function __construct(private DbWriter $dbWriter){}
     public function registerUser($parsedBody){
         try{
+            //check on empty instead of isset?
             if (!isset($parsedBody['username']) || !isset($parsedBody['password'])) {
                 throw new InvalidJsonKeysException("Missing required JSON keys: 'username' and/or 'password'.");
             }

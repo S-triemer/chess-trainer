@@ -7,19 +7,15 @@ const router = useRouter()
 const username = ref('')
 const password = ref('')
 
-async function login() {
+async function register() {
   try {
-    const response = await axios.post('http://127.0.0.1:81/api/users/login', {
+    const response = await axios.post('http://127.0.0.1:81/api/users/register', {
       username: username.value,
       password: password.value
     })
-    console.log(response)
-    const token = response.data.token
-    console.log(token)
-    localStorage.setItem('jwt', token)
 
     router.push({
-      name: 'userPage'
+      name: 'login'
     })
   } catch (error) {
     console.error('Login failed:', error)
@@ -30,8 +26,8 @@ async function login() {
 <template>
   <div class="flex items-center justify-center min-h-screen bg-slate-950">
     <div class="w-full max-w-md p-8 space-y-6 bg-slate-800 rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold text-center text-white">Login</h2>
-      <form @submit.prevent="login" class="space-y-4">
+      <h2 class="text-2xl font-bold text-center text-white">Register</h2>
+      <form @submit.prevent="register" class="space-y-4">
         <div>
           <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
           <input
@@ -57,11 +53,9 @@ async function login() {
           type="submit"
           class="w-full px-4 py-2 font-semibold text-white bg-indigo-700 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
         >
-          Login
+          Register
         </button>
-        <a href="/register" class="block text-center text-indigo-400 underline"
-          >Not registered yet?</a
-        >
+        <a href="/" class="block text-center text-indigo-400 underline">Already registered?</a>
       </form>
     </div>
   </div>
